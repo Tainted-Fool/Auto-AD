@@ -32,7 +32,7 @@ function Get-CSVFile
     # Check if path exist and is a CSV file, if not run function again
     if ((Test-Path $csvPath) -and ($csvPath -like "*.csv")) 
     {
-        # Import CSV file
+        # Import CSV file and call function to create AD users
         $csvFile = Import-Csv -Path $csvPath
         New-AD-Users($csvFile)
     }
@@ -67,6 +67,7 @@ function New-AD-Users($csvFile)
             Enabled                 = $true
         }
         # Create new AD user
+        # Remove the 'WhatIf' flag to execute the command
         New-ADUser @userInfo -WhatIf 
     }
 }
